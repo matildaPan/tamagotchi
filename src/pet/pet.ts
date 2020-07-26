@@ -1,7 +1,5 @@
 import { IPetState, IPetConfig } from '../types';
-
-const MAX_VALUE = 100;
-const MAX_AGE = 10;
+import { MAX_VALUE, MAX_AGE  } from '../utils/constants';
 
 export class Pet {
   public state: IPetState;
