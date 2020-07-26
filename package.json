@@ -27,6 +27,9 @@
     "typescript": "^3.9.7"
   },
   "dependencies": {
+    "@types/blessed": "^0.1.17",
+    "blessed": "^0.1.81",
+    "blessed-contrib": "^4.8.20",
     "tslint-config-airbnb": "^5.11.2"
   },
   "husky": {
