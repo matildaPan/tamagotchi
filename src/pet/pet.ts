@@ -1,5 +1,13 @@
-import { IPetState, IPetConfig } from '../types';
-import { MAX_VALUE, MAX_AGE  } from '../utils/constants';
+import { tree } from 'blessed-contrib';
+import { IPetState, IPetConfig, CommandType } from '../types';
+import { MAX_POINT,
+        MIN_POINT,
+        MAX_AGE,
+        HEALTH_POINT_UNIT,
+        TOILET_INTERVAL,
+        HEALTH_CHECK_INTERVAL,
+        TOILET_CLEAN_COMMAND,
+} from '../utils/constants';
 
 export class Pet {
   public state: IPetState;
@@ -7,11 +15,12 @@ export class Pet {
   constructor() {
     this.state = this.initiliseState();
     this.configValues = {
-      maxHealthPoint: MAX_VALUE,
-      maxHungerPoint: MAX_VALUE,
+      maxHealthPoint: MAX_POINT,
+      maxHungerPoint: MAX_POINT,
       maxAge: MAX_AGE,
     };
-
+    this.startLife();
+    this.healthCheck();
   }
 
   initiliseState(): IPetState {
@@ -22,6 +31,44 @@ export class Pet {
       readyForToilet: false,
       age: 1,
     };
+
+  }
+
+  healthCheck() {
+    setInterval(() => {
+      this.toiletCheck();
+    },          HEALTH_CHECK_INTERVAL);
+  }
+
+  startLife() {
+    this.toiletMovement();
+  }
+
+  toiletCheck() {
+    if (this.state.readyForToilet) {
+      this.state.healthPoint = Math.max(this.state.healthPoint - HEALTH_POINT_UNIT, MIN_POINT);
+    }
+    else {
+      this.state.healthPoint = Math.min(this.state.healthPoint + HEALTH_POINT_UNIT , MAX_POINT);
+    }
+  }
+
+  digest() {
+  }
+
+  toiletMovement() {
+    setInterval(() => {
+      this.state.readyForToilet = true;
+    },          TOILET_INTERVAL);
+  }
+
+  public receiveCommand(command: CommandType) {
+    switch (command){
+      case TOILET_CLEAN_COMMAND:
+        this.state.readyForToilet = false;
+        this.state.healthPoint = Math.min(this.state.healthPoint + HEALTH_POINT_UNIT , MAX_POINT);
+        break;
+    }
 
   }
 

@@ -2,6 +2,7 @@
 import blessedContrib from 'blessed-contrib';
 import { grid } from '../grid';
 import { IPet } from '../../types';
+import { HEALTH_CHECK_INTERVAL } from '../../utils/constants';
 
 const donut = grid.set(
   0, 4, 10, 2,
@@ -24,5 +25,5 @@ const updateGaugeData = (pet: IPet) => () => {
 
 export const healthPointIndicator = (pet: IPet) => {
   updateGaugeData(pet)();
-  setInterval(updateGaugeData(pet), 100);
+  setInterval(updateGaugeData(pet), HEALTH_CHECK_INTERVAL);
 };

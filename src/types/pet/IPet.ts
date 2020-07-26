@@ -4,4 +4,5 @@ import { IPetConfig } from './IPetConfig';
 export interface IPet {
   state: IPetState;
   configValues: IPetConfig;
+  receiveCommand: Function;
 }
