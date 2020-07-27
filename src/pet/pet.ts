@@ -1,10 +1,9 @@
-import { tree } from 'blessed-contrib';
 import { IPetState, IPetConfig, CommandType } from '../types';
 import { MAX_POINT,
         MIN_POINT,
         MAX_AGE,
         HEALTH_POINT_UNIT,
-        TOILET_INTERVAL,
+        TOILET_MOVEMENT_INTERVAL,
         HEALTH_CHECK_INTERVAL,
         TOILET_CLEAN_COMMAND,
 } from '../utils/constants';
@@ -59,7 +58,7 @@ export class Pet {
   toiletMovement() {
     setInterval(() => {
       this.state.readyForToilet = true;
-    },          TOILET_INTERVAL);
+    },          TOILET_MOVEMENT_INTERVAL);
   }
 
   public receiveCommand(command: CommandType) {

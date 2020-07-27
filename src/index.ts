@@ -1,5 +1,5 @@
 import { Pet } from './pet/pet';
-import { render } from './command-line-interface/cli';
+import { render } from './cli/cli';
 
 const pet = new Pet();
 
