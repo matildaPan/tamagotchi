@@ -1,4 +1,3 @@
-
 import blessedContrib from 'blessed-contrib';
 import { grid } from '../grid';
 import { IPet } from '../../types';
@@ -6,7 +5,7 @@ import { HEALTH_CHECK_INTERVAL } from '../../utils/constants';
 import { IIdicator } from './IIndicator';
 
 const donut = grid.set(
-  0, 4, 12, 4,
+  2, 4, 4, 4,
   blessedContrib.donut,
   { label: 'Health And Age',
     showLabel: true,

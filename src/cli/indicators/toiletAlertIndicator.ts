@@ -15,7 +15,7 @@ const options = {
   color: 'green' ,
   label: 'TOILET ALERT!'};
 
-const lcd = grid.set(2, 0, 10, 4, blessedContrib.lcd, options);
+const lcd = grid.set(2, 0, 4, 4, blessedContrib.lcd, options);
 
 export class ToiletAlertIndicator implements IIdicator{
 
