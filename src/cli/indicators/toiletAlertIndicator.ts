@@ -25,9 +25,9 @@ export class ToiletAlertIndicator implements IIdicator{
   }
 
   updateData = (pet:IPet) => () => {
-    lcd.setDisplay(pet.state.readyForToilet ? TOILET_DIRTY_LABEL : TOILET_CLEAN_LABEL);
+    lcd.setDisplay(pet.state.pooped ? TOILET_DIRTY_LABEL : TOILET_CLEAN_LABEL);
     lcd.setOptions({
-      color: pet.state.readyForToilet ? 'red' : 'green',
+      color: pet.state.pooped ? 'red' : 'green',
     });
   }
 

@@ -28,7 +28,7 @@ export class Pet {
       healthPoint: 100,
       hungerPoint: 0,
       sleepStatues: false,
-      readyForToilet: false,
+      pooped: false,
       age: 1,
     };
 
@@ -45,7 +45,7 @@ export class Pet {
   }
 
   toiletCheck() {
-    if (this.state.readyForToilet) {
+    if (this.state.pooped) {
       this.state.healthPoint = Math.max(this.state.healthPoint - HEALTH_POINT_UNIT, MIN_POINT);
     }
     else {
@@ -58,7 +58,7 @@ export class Pet {
 
   toiletMovement() {
     setInterval(() => {
-      this.state.readyForToilet = true;
+      this.state.pooped = true;
     },          TOILET_MOVEMENT_INTERVAL);
   }
 
@@ -71,7 +71,7 @@ export class Pet {
   public receiveCommand(command: CommandType) {
     switch (command){
       case TOILET_CLEAN_COMMAND:
-        this.state.readyForToilet = false;
+        this.state.pooped = false;
         this.state.healthPoint = Math.min(this.state.healthPoint + HEALTH_POINT_UNIT , MAX_POINT);
         break;
     }
