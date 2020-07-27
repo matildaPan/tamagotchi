@@ -1,12 +1,12 @@
 import { IPet } from '../types';
 import { CLI_RENDER_TIME_INTERVAL } from '../utils/constants';
-import { healthPointIndicator } from './indicators/healthPointIndicator';
-import { toiletAlertIndicator } from './indicators/toiletAlertIndicator';
+import { HealthAgePointIndicator } from './indicators/healthAgePointIndicator';
+import { ToiletAlertIndicator } from './indicators/toiletAlertIndicator';
 import { screen } from './screen';
 
 export const render = (pet:IPet) => {
-  healthPointIndicator(pet);
-  toiletAlertIndicator(pet);
+  new HealthAgePointIndicator(pet);
+  new ToiletAlertIndicator(pet);
 
   screen.render();
 

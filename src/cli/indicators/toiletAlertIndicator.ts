@@ -2,6 +2,7 @@ import blessedContrib from 'blessed-contrib';
 import { grid } from '../grid';
 import { IPet } from '../../types';
 import { TOILET_ALERT_RENDER_INTERVAL, TOILET_DIRTY_LABEL, TOILET_CLEAN_LABEL } from '../../utils/constants';
+import { IIdicator } from './IIndicator';
 
 const options = {
   segmentWidth: 0.1,
@@ -16,14 +17,22 @@ const options = {
 
 const lcd = grid.set(2, 0, 10, 4, blessedContrib.lcd, options);
 
-const updateLcdData = (pet:IPet) => () => {
-  lcd.setDisplay(pet.state.readyForToilet ? TOILET_DIRTY_LABEL : TOILET_CLEAN_LABEL);
-  lcd.setOptions({
-    color: pet.state.readyForToilet ? 'red' : 'green',
-  });
-};
+export class ToiletAlertIndicator implements IIdicator{
 
-export const toiletAlertIndicator = (pet: IPet) => {
-  updateLcdData(pet)();
-  setInterval(updateLcdData(pet), TOILET_ALERT_RENDER_INTERVAL);
-};
+  constructor(pet: IPet) {
+    this.updateData(pet)();
+    this.renderIndicator(pet);
+  }
+
+  updateData = (pet:IPet) => () => {
+    lcd.setDisplay(pet.state.readyForToilet ? TOILET_DIRTY_LABEL : TOILET_CLEAN_LABEL);
+    lcd.setOptions({
+      color: pet.state.readyForToilet ? 'red' : 'green',
+    });
+  }
+
+  renderIndicator = (pet: IPet) => {
+    this.updateData(pet)();
+    setInterval(this.updateData(pet), TOILET_ALERT_RENDER_INTERVAL);
+  }
+}

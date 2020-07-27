@@ -6,6 +6,7 @@ import { MAX_POINT,
         TOILET_MOVEMENT_INTERVAL,
         HEALTH_CHECK_INTERVAL,
         TOILET_CLEAN_COMMAND,
+        AGE_PROCESS_INTERVAL,
 } from '../utils/constants';
 
 export class Pet {
@@ -59,6 +60,12 @@ export class Pet {
     setInterval(() => {
       this.state.readyForToilet = true;
     },          TOILET_MOVEMENT_INTERVAL);
+  }
+
+  ageProcess() {
+    setInterval(() => {
+      this.state.age = Math.min(this.state.age + 1, MAX_AGE);
+    },          AGE_PROCESS_INTERVAL);
   }
 
   public receiveCommand(command: CommandType) {
