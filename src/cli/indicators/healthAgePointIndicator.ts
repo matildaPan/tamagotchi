@@ -1,7 +1,7 @@
 import blessedContrib from 'blessed-contrib';
 import { grid } from '../grid';
 import { IPet } from '../../types';
-import { HEALTH_CHECK_INTERVAL } from '../../utils/constants';
+import { RENDER_INTERVAL } from '../../utils/constants';
 import { IIdicator } from './IIndicator';
 
 const donut = grid.set(
@@ -33,7 +33,7 @@ export class HealthAgePointIndicator implements IIdicator {
   }
 
   renderIndicator = (pet: IPet) => {
-    setInterval(this.updateData(pet), HEALTH_CHECK_INTERVAL);
+    setInterval(this.updateData(pet), RENDER_INTERVAL);
   }
 
 }

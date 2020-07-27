@@ -1,6 +1,6 @@
 export interface IPetState {
   healthPoint: number;
-  hungerPoint: number;
+  fullnessPoint: number;
   sleepStatues: boolean;
   pooped: boolean;
   age: number;

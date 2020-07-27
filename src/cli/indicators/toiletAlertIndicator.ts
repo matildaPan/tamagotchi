@@ -1,7 +1,7 @@
 import blessedContrib from 'blessed-contrib';
 import { grid } from '../grid';
 import { IPet } from '../../types';
-import { TOILET_ALERT_RENDER_INTERVAL, TOILET_DIRTY_LABEL, TOILET_CLEAN_LABEL } from '../../utils/constants';
+import { RENDER_INTERVAL, TOILET_DIRTY_LABEL, TOILET_CLEAN_LABEL } from '../../utils/constants';
 import { IIdicator } from './IIndicator';
 
 const options = {
@@ -33,6 +33,6 @@ export class ToiletAlertIndicator implements IIdicator{
 
   renderIndicator = (pet: IPet) => {
     this.updateData(pet)();
-    setInterval(this.updateData(pet), TOILET_ALERT_RENDER_INTERVAL);
+    setInterval(this.updateData(pet), RENDER_INTERVAL);
   }
 }

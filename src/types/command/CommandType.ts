@@ -1,4 +1,4 @@
 export enum CommandType {
   CleanToilet = 'TOILET CLEAN',
-  Feed = 'feed',
+  Feed = 'FEED',
 }

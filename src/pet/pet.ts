@@ -7,6 +7,9 @@ import { MAX_POINT,
         HEALTH_CHECK_INTERVAL,
         TOILET_CLEAN_COMMAND,
         AGE_PROCESS_INTERVAL,
+        FULLNESS_POINT_UNIT,
+        DIGEST_INTERVAL,
+        FEED,
 } from '../utils/constants';
 
 export class Pet {
@@ -16,7 +19,7 @@ export class Pet {
     this.state = this.initiliseState();
     this.configValues = {
       maxHealthPoint: MAX_POINT,
-      maxHungerPoint: MAX_POINT,
+      maxFullnessPoint: MAX_POINT,
       maxAge: MAX_AGE,
     };
     this.startLife();
@@ -26,7 +29,7 @@ export class Pet {
   initiliseState(): IPetState {
     return{
       healthPoint: 100,
-      hungerPoint: 0,
+      fullnessPoint: 100,
       sleepStatues: false,
       pooped: false,
       age: 1,
@@ -37,11 +40,13 @@ export class Pet {
   healthCheck() {
     setInterval(() => {
       this.toiletCheck();
+      this.stomachCheck();
     },          HEALTH_CHECK_INTERVAL);
   }
 
   startLife() {
     this.toiletMovement();
+    this.digest();
   }
 
   toiletCheck() {
@@ -53,7 +58,20 @@ export class Pet {
     }
   }
 
+  stomachCheck() {
+    if (this.state.fullnessPoint === MIN_POINT) {
+      this.state.healthPoint = Math.max(this.state.healthPoint - HEALTH_POINT_UNIT, MIN_POINT);
+    }
+  }
+
   digest() {
+    setInterval(() => {
+      const full = Math.max(
+        this.state.fullnessPoint - FULLNESS_POINT_UNIT,
+        MIN_POINT,
+      );
+      this.state.fullnessPoint = full;
+    },          DIGEST_INTERVAL);
   }
 
   toiletMovement() {
@@ -73,6 +91,10 @@ export class Pet {
       case TOILET_CLEAN_COMMAND:
         this.state.pooped = false;
         this.state.healthPoint = Math.min(this.state.healthPoint + HEALTH_POINT_UNIT , MAX_POINT);
+        break;
+      case FEED:
+        this.state.fullnessPoint =
+          Math.min(this.state.fullnessPoint + FULLNESS_POINT_UNIT, MAX_POINT);
         break;
     }
 

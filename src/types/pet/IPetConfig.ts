@@ -1,5 +1,5 @@
 export interface IPetConfig{
   maxHealthPoint: number;
-  maxHungerPoint: number;
+  maxFullnessPoint: number;
   maxAge: number;
 }
