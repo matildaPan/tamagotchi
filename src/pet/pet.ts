@@ -15,7 +15,7 @@ import { MAX_POINT,
 
 export class Pet {
   public state: IPetState;
-  public configValues: IPetConfig;
+  public readonly configValues: IPetConfig;
   constructor() {
     this.state = this.initiliseState();
     this.configValues = {
@@ -27,7 +27,7 @@ export class Pet {
     this.healthCheck();
   }
 
-  initiliseState(): IPetState {
+  private initiliseState(): IPetState {
     return{
       healthPoint: 100,
       fullnessPoint: 100,
@@ -35,7 +35,6 @@ export class Pet {
       pooped: false,
       age: 1,
     };
-
   }
 
   healthCheck() {
@@ -45,50 +44,42 @@ export class Pet {
     },          HEALTH_CHECK_INTERVAL);
   }
 
-  startLife() {
+  public startLife() {
     this.toiletMovement();
     this.digest();
     this.sleepRoutine();
   }
 
-  toiletCheck() {
-    if (this.state.pooped) {
-      this.state.healthPoint = Math.max(this.state.healthPoint - HEALTH_POINT_UNIT, MIN_POINT);
-    }
-    else {
-      this.state.healthPoint = Math.min(this.state.healthPoint + HEALTH_POINT_UNIT , MAX_POINT);
-    }
+  private toiletCheck() {
+    this.state.pooped ?  this.decreaseHealth() : this.increaseHealth() ;
   }
 
-  stomachCheck() {
-    if (this.state.fullnessPoint === MIN_POINT) {
-      this.state.healthPoint = Math.max(this.state.healthPoint - HEALTH_POINT_UNIT, MIN_POINT);
-    }
+  private stomachCheck() {
+    this.state.fullnessPoint === MIN_POINT ? this.decreaseHealth() : this.increaseHealth();
   }
 
-  digest() {
+  public digest() {
     setInterval(() => {
-      const full = Math.max(
+      this.state.fullnessPoint = Math.max(
         this.state.fullnessPoint - FULLNESS_POINT_UNIT,
         MIN_POINT,
       );
-      this.state.fullnessPoint = full;
     },          DIGEST_INTERVAL);
   }
 
-  toiletMovement() {
+  private toiletMovement() {
     setInterval(() => {
       this.state.pooped = true;
     },          TOILET_MOVEMENT_INTERVAL);
   }
 
-  sleepRoutine() {
+  private sleepRoutine() {
     setInterval(() => {
       this.state.sleepStatues = !this.state.sleepStatues;
     },          SLEEP_ROUTINE_INTERVAL);
   }
 
-  ageProcess() {
+  private ageProcess() {
     setInterval(() => {
       this.state.age = Math.min(this.state.age + 1, MAX_AGE);
     },          AGE_PROCESS_INTERVAL);
@@ -97,15 +88,24 @@ export class Pet {
   public receiveCommand(command: CommandType) {
     switch (command){
       case TOILET_CLEAN_COMMAND:
-        this.state.pooped = false;
-        this.state.healthPoint = Math.min(this.state.healthPoint + HEALTH_POINT_UNIT , MAX_POINT);
+        if (this.state.pooped) {
+          this.state.pooped = false;
+          this.increaseHealth();
+        }
         break;
       case FEED:
         this.state.fullnessPoint =
           Math.min(this.state.fullnessPoint + FULLNESS_POINT_UNIT, MAX_POINT);
         break;
     }
+  }
 
+  public decreaseHealth() {
+    this.state.healthPoint = Math.max(this.state.healthPoint - HEALTH_POINT_UNIT, MIN_POINT);
+  }
+
+  public increaseHealth() {
+    this.state.healthPoint = Math.min(this.state.healthPoint + HEALTH_POINT_UNIT , MAX_POINT);
   }
 
 }
