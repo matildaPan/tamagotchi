@@ -1,22 +1,22 @@
 import blessedContrib from 'blessed-contrib';
 import { grid } from '../grid';
 import { IPet } from '../../types';
-import { RENDER_INTERVAL, TOILET_DIRTY_LABEL, TOILET_CLEAN_LABEL } from '../../utils/constants';
+import { RENDER_INTERVAL, SLEEP_LABEL, AWAKE_LABEL } from '../../utils/constants';
 import { IIdicator } from './IIndicator';
 
 const options = {
   segmentWidth: 0.1,
   segmentInterval: 0.1,
   strokeWidth: 0.1,
-  elements: 10,
+  elements: 5,
   elementSpacing: 4 ,
   elementPadding: 2 ,
-  color: 'green' ,
-  label: 'TOILET ALERT!'};
+  color: 'white' ,
+  label: 'Sleep Status'};
 
-const lcd = grid.set(2, 0, 4, 4, blessedContrib.lcd, options);
+const lcd = grid.set(2, 8, 4, 4, blessedContrib.lcd, options);
 
-export class ToiletAlertIndicator implements IIdicator{
+export class SleepIndicator implements IIdicator{
 
   constructor(pet: IPet) {
     this.updateData(pet)();
@@ -24,10 +24,7 @@ export class ToiletAlertIndicator implements IIdicator{
   }
 
   updateData = (pet:IPet) => () => {
-    lcd.setDisplay(pet.state.pooped ? TOILET_DIRTY_LABEL : TOILET_CLEAN_LABEL);
-    lcd.setOptions({
-      color: pet.state.pooped ? 'red' : 'green',
-    });
+    lcd.setDisplay(pet.state.sleepStatues ? SLEEP_LABEL : AWAKE_LABEL);
   }
 
   renderIndicator = (pet: IPet) => {

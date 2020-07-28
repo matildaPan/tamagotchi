@@ -10,6 +10,7 @@ import { MAX_POINT,
         FULLNESS_POINT_UNIT,
         DIGEST_INTERVAL,
         FEED,
+        SLEEP_ROUTINE_INTERVAL,
 } from '../utils/constants';
 
 export class Pet {
@@ -47,6 +48,7 @@ export class Pet {
   startLife() {
     this.toiletMovement();
     this.digest();
+    this.sleepRoutine();
   }
 
   toiletCheck() {
@@ -78,6 +80,12 @@ export class Pet {
     setInterval(() => {
       this.state.pooped = true;
     },          TOILET_MOVEMENT_INTERVAL);
+  }
+
+  sleepRoutine() {
+    setInterval(() => {
+      this.state.sleepStatues = !this.state.sleepStatues;
+    },          SLEEP_ROUTINE_INTERVAL);
   }
 
   ageProcess() {
