@@ -120,6 +120,7 @@ describe('Pet', () => {
       const toiletMovement = new ToiletMovement();
       pet.performActivity(toiletMovement);
       expect(toiletMovementUpdateStateMock).toHaveBeenCalledTimes(2);
+      expect(digestUpdateStateMock).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -130,12 +131,21 @@ describe('Pet', () => {
       pet.receiveCommand(CommandType.CleanToilet);
       expect(increaseHealthMock).toHaveBeenCalledWith(pet);
       expect(pet.state.pooped).toBe(false);
+      expect(increaseFullnessMock).not.toBeCalledWith(pet);
     });
     it('feed to increase the fullness', () => {
       const pet = new Pet();
       pet.state.pooped = true;
       pet.receiveCommand(CommandType.Feed);
       expect(increaseFullnessMock).toBeCalledWith(pet);
+      expect(increaseHealthMock).not.toHaveBeenCalledWith(pet);
+    });
+    it('should do nothing when receive wrong command', () => {
+      const pet = new Pet();
+      pet.state.pooped = true;
+      pet.receiveCommand('wrong command' as any);
+      expect(increaseHealthMock).not.toHaveBeenCalled();
+      expect(increaseFullnessMock).not.toHaveBeenCalled();
     });
   });
 
