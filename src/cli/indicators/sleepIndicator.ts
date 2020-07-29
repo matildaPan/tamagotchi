@@ -1,8 +1,7 @@
 import blessedContrib from 'blessed-contrib';
 import { grid } from '../grid';
-import { IPet } from '../../types';
+import { IPet, IIdicator } from '../../types';
 import { RENDER_INTERVAL, SLEEP_LABEL, AWAKE_LABEL } from '../../utils/constants';
-import { IIdicator } from './IIndicator';
 
 const options = {
   segmentWidth: 0.1,

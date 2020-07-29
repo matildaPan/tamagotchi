@@ -1,7 +1,6 @@
 import blessedContrib from 'blessed-contrib';
 import { grid } from '../grid';
-import { IPet } from '../../types';
-import { IIdicator } from './IIndicator';
+import { IPet, IIdicator } from '../../types';
 import { RENDER_INTERVAL } from '../../utils/constants';
 
 const gauge = grid.set(

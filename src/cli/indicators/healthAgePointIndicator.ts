@@ -1,8 +1,7 @@
 import blessedContrib from 'blessed-contrib';
 import { grid } from '../grid';
-import { IPet } from '../../types';
+import { IPet, IIdicator } from '../../types';
 import { RENDER_INTERVAL } from '../../utils/constants';
-import { IIdicator } from './IIndicator';
 
 const donut = grid.set(
   2, 4, 4, 4,
