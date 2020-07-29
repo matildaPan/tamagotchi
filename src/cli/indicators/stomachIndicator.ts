@@ -4,7 +4,7 @@ import { IPet, IIdicator } from '../../types';
 import { RENDER_INTERVAL } from '../../utils/constants';
 
 const gauge = grid.set(
-  6, 4, 4, 4,
+  4, 4, 2, 4,
   blessedContrib.gauge,
   { label: 'Stomach Fullness',
     stroke: 'green',

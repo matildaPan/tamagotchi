@@ -4,7 +4,7 @@ import { IPet, IIdicator } from '../../types';
 import { RENDER_INTERVAL } from '../../utils/constants';
 
 const donut = grid.set(
-  2, 4, 4, 4,
+  2, 4, 2, 4,
   blessedContrib.donut,
   { label: 'Health And Age',
     showLabel: true,
