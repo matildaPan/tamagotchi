@@ -1,2 +1,2 @@
 export * from './initialiseConfigValues';
-export * from './initiliseState';
+export * from './initialiseState';

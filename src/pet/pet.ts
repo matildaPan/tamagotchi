@@ -1,6 +1,6 @@
 import { IPetState, IPetConfig, CommandType, IActivity, IHealthCheck } from '../types';
 import { ToiletMovement, Digest, SleepRoutine, AgeProcess } from './activities';
-import { initiliseConfigValues, initiliseState } from './initializer';
+import { initialiseConfigValues, initialiseState } from './initializer';
 import { HealthCheck } from './health';
 import { TOILET_CLEAN_COMMAND, FEED }
  from '../utils/constants';
@@ -10,8 +10,8 @@ export class Pet {
   public readonly configValues: IPetConfig;
   public readonly healthCheck: IHealthCheck;
   constructor() {
-    this.state = initiliseState();
-    this.configValues = initiliseConfigValues();
+    this.state = initialiseState();
+    this.configValues = initialiseConfigValues();
     this.healthCheck = new HealthCheck();
     this.healthCheck.bodyCheck(this);
     this.startLife();

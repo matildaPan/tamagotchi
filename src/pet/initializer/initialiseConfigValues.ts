@@ -1,7 +1,7 @@
 import { IPetConfig } from '../../types';
 import { MAX_POINT, MAX_AGE, MIN_POINT } from '../../utils/constants';
 
-export const initiliseConfigValues  = ():IPetConfig => {
+export const initialiseConfigValues  = ():IPetConfig => {
   return{
     maxAge: MAX_AGE,
     maxHealthPoint: MAX_POINT,
