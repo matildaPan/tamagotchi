@@ -1,16 +1,13 @@
-import { IPetState, IPetConfig, CommandType } from '../types';
+import { IPetState, IPetConfig, CommandType, IActivity } from '../types';
+import { ToiletMovement, Digest, SleepRoutine, AgeProcess } from './activities';
 import { MAX_POINT,
         MIN_POINT,
         MAX_AGE,
         HEALTH_POINT_UNIT,
-        TOILET_MOVEMENT_INTERVAL,
         HEALTH_CHECK_INTERVAL,
         TOILET_CLEAN_COMMAND,
-        AGE_PROCESS_INTERVAL,
         FULLNESS_POINT_UNIT,
-        DIGEST_INTERVAL,
         FEED,
-        SLEEP_ROUTINE_INTERVAL,
 } from '../utils/constants';
 
 export class Pet {
@@ -37,17 +34,18 @@ export class Pet {
     };
   }
 
-  healthCheck() {
+  private healthCheck() {
     setInterval(() => {
       this.toiletCheck();
       this.stomachCheck();
     },          HEALTH_CHECK_INTERVAL);
   }
 
-  public startLife() {
-    this.toiletMovement();
-    this.digest();
-    this.sleepRoutine();
+  private startLife() {
+    this.performActivity(new ToiletMovement());
+    this.performActivity(new Digest());
+    this.performActivity(new SleepRoutine());
+    this.performActivity(new AgeProcess());
   }
 
   private toiletCheck() {
@@ -55,34 +53,11 @@ export class Pet {
   }
 
   private stomachCheck() {
-    this.state.fullnessPoint === MIN_POINT ? this.decreaseHealth() : this.increaseHealth();
+    this.state.fullnessPoint === MIN_POINT ? this.decreaseHealth() : undefined;
   }
 
-  public digest() {
-    setInterval(() => {
-      this.state.fullnessPoint = Math.max(
-        this.state.fullnessPoint - FULLNESS_POINT_UNIT,
-        MIN_POINT,
-      );
-    },          DIGEST_INTERVAL);
-  }
-
-  private toiletMovement() {
-    setInterval(() => {
-      this.state.pooped = true;
-    },          TOILET_MOVEMENT_INTERVAL);
-  }
-
-  private sleepRoutine() {
-    setInterval(() => {
-      this.state.sleepStatues = !this.state.sleepStatues;
-    },          SLEEP_ROUTINE_INTERVAL);
-  }
-
-  private ageProcess() {
-    setInterval(() => {
-      this.state.age = Math.min(this.state.age + 1, MAX_AGE);
-    },          AGE_PROCESS_INTERVAL);
+  performActivity(action: IActivity) {
+    action.updateState(this);
   }
 
   public receiveCommand(command: CommandType) {
