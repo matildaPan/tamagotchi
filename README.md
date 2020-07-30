@@ -30,10 +30,17 @@ $ yarn test
 ```
 ![UNIT-TEST](./docs/unit-test.png)
 
-### Todos
- - Write MORE Tests
+### New Features
  - Add Play Mode
- - Add feature of tamagotchi been sick
+ - Add Feature of Tamagotchi been sick randomly
+ - One user can have multiple Tamagotchi to keep 
+
+### To Improve
+ - Have a DB to store all logs of user activity
+ - We can analyse what is the most popular feature
+ - Split each domain into its own service (MicroService)
+ - Dockerize the application
+ - Write MORE Tests
 
 ### Ideas
  - Can become a mobile phone game
